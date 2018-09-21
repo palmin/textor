@@ -19,6 +19,8 @@
 		BE3BE749205B046E0044356A /* UITableViewCell+Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3BE748205B046E0044356A /* UITableViewCell+Labels.swift */; };
 		BE5CE1132059AA2500158BE9 /* StoryboardFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5CE1122059AA2500158BE9 /* StoryboardFactory.swift */; };
 		BE5CE1152059AB5E00158BE9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5CE1142059AB5E00158BE9 /* Theme.swift */; };
+		BE5FCCED215505540025C3F6 /* WorkingCopyUrlService.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5FCCEC215505540025C3F6 /* WorkingCopyUrlService.m */; };
+		BE5FCCEF215506960025C3F6 /* WorkingCopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5FCCEE215506960025C3F6 /* WorkingCopy.swift */; };
 		BEC104DF2054481F009F56E7 /* Planets.txt in Resources */ = {isa = PBXBuildFile; fileRef = BEC104DE2054481F009F56E7 /* Planets.txt */; };
 		BEC104E320546728009F56E7 /* Circle.svg in Resources */ = {isa = PBXBuildFile; fileRef = BEC104E220546728009F56E7 /* Circle.svg */; };
 		BEC104E520546730009F56E7 /* Pharaoh.txt in Resources */ = {isa = PBXBuildFile; fileRef = BEC104E420546730009F56E7 /* Pharaoh.txt */; };
@@ -64,6 +66,10 @@
 		BE3BE748205B046E0044356A /* UITableViewCell+Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Labels.swift"; sourceTree = "<group>"; };
 		BE5CE1122059AA2500158BE9 /* StoryboardFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardFactory.swift; sourceTree = "<group>"; };
 		BE5CE1142059AB5E00158BE9 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		BE5FCCEA215505520025C3F6 /* Textor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Textor-Bridging-Header.h"; sourceTree = "<group>"; };
+		BE5FCCEB215505530025C3F6 /* WorkingCopyUrlService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkingCopyUrlService.h; sourceTree = "<group>"; };
+		BE5FCCEC215505540025C3F6 /* WorkingCopyUrlService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkingCopyUrlService.m; sourceTree = "<group>"; };
+		BE5FCCEE215506960025C3F6 /* WorkingCopy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkingCopy.swift; sourceTree = "<group>"; };
 		BEC104DE2054481F009F56E7 /* Planets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Planets.txt; sourceTree = "<group>"; };
 		BEC104E220546728009F56E7 /* Circle.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Circle.svg; sourceTree = "<group>"; };
 		BEC104E420546730009F56E7 /* Pharaoh.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Pharaoh.txt; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 		BE000C191FF9451F00D06B91 = {
 			isa = PBXGroup;
 			children = (
+				BE5FCCE9215505320025C3F6 /* Working Copy */,
 				BE000C241FF9451F00D06B91 /* Textor */,
 				BED3CABD20544197007968FF /* Textor UI Tests */,
 				BE000C231FF9451F00D06B91 /* Products */,
@@ -143,12 +150,23 @@
 				BECE41002038DCE9004889F0 /* Util */,
 				BE000C3B1FF94F9B00D06B91 /* Textor.entitlements */,
 				BE000C251FF9451F00D06B91 /* AppDelegate.swift */,
-				BE000C2D1FF9451F00D06B91 /* Main.storyboard */,
-				BE000C301FF9451F00D06B91 /* Assets.xcassets */,
 				BE000C321FF9451F00D06B91 /* LaunchScreen.storyboard */,
+				BE000C2D1FF9451F00D06B91 /* Main.storyboard */,
+				BE5FCCEA215505520025C3F6 /* Textor-Bridging-Header.h */,
+				BE000C301FF9451F00D06B91 /* Assets.xcassets */,
 				BE000C351FF9451F00D06B91 /* Info.plist */,
 			);
 			path = Textor;
+			sourceTree = "<group>";
+		};
+		BE5FCCE9215505320025C3F6 /* Working Copy */ = {
+			isa = PBXGroup;
+			children = (
+				BE5FCCEE215506960025C3F6 /* WorkingCopy.swift */,
+				BE5FCCEB215505530025C3F6 /* WorkingCopyUrlService.h */,
+				BE5FCCEC215505540025C3F6 /* WorkingCopyUrlService.m */,
+			);
+			path = "Working Copy";
 			sourceTree = "<group>";
 		};
 		BECE41002038DCE9004889F0 /* Util */ = {
@@ -230,6 +248,7 @@
 				BE000C1F1FF9451F00D06B91 /* Frameworks */,
 				BE000C201FF9451F00D06B91 /* Resources */,
 				B4B611D7518E584FBA9B903F /* [CP] Embed Pods Frameworks */,
+				6851618230936CF2F2115A03 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +289,7 @@
 				TargetAttributes = {
 					BE000C211FF9451F00D06B91 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.iCloud = {
@@ -329,6 +349,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6851618230936CF2F2115A03 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Textor/Pods-Textor-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7AC02E7F7630FC3BE7ADEE56 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,6 +409,7 @@
 			files = (
 				BE000C2C1FF9451F00D06B91 /* Document.swift in Sources */,
 				BEDDAB1720587C1700AC9396 /* UserDefaultsController.swift in Sources */,
+				BE5FCCED215505540025C3F6 /* WorkingCopyUrlService.m in Sources */,
 				BE000C2A1FF9451F00D06B91 /* DocumentViewController.swift in Sources */,
 				BEDDAB1B2058813800AC9396 /* UIDevice+Name.swift in Sources */,
 				BEFE545020697B1000FEFE93 /* FontPickerViewController.swift in Sources */,
@@ -386,6 +422,7 @@
 				BECE40FA2038DB67004889F0 /* UIViewController+Alerts.swift in Sources */,
 				BEDDAB152058745300AC9396 /* Notification+Name.swift in Sources */,
 				BEDDAB192058811F00AC9396 /* Bundle+Info.swift in Sources */,
+				BE5FCCEF215506960025C3F6 /* WorkingCopy.swift in Sources */,
 				BE5CE1152059AB5E00158BE9 /* Theme.swift in Sources */,
 				BE31644E1FF95FF00071AE58 /* DocumentManager.swift in Sources */,
 				BED3CAB420543936007968FF /* SettingsViewController.swift in Sources */,
@@ -547,17 +584,20 @@
 			baseConfigurationReference = 42FA62BBBE3A16CF4D515238 /* Pods-Textor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Textor/Textor.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6G5LMQ72D8;
+				DEVELOPMENT_TEAM = 4U9NSKBV63;
 				INFOPLIST_FILE = "$(SRCROOT)/Textor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.silverfox.plaintextedit;
+				PRODUCT_BUNDLE_IDENTIFIER = dk.algoritmer.plaintextedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Textor/Textor-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -568,16 +608,18 @@
 			baseConfigurationReference = C306DDCD34CEE33C89B349CB /* Pods-Textor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Textor/Textor.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6G5LMQ72D8;
+				DEVELOPMENT_TEAM = 4U9NSKBV63;
 				INFOPLIST_FILE = "$(SRCROOT)/Textor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.silverfox.plaintextedit;
+				PRODUCT_BUNDLE_IDENTIFIER = dk.algoritmer.plaintextedit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Textor/Textor-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

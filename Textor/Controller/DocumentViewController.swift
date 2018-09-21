@@ -16,6 +16,8 @@ var documentsClosed = 0
 class DocumentViewController: UIViewController {
 
 	@IBOutlet weak var textView: UITextView!
+    @IBOutlet var workingCopyStatusButton: UIBarButtonItem!
+    
 	var document: Document?
 
 	private let keyboardObserver = KeyboardObserver()
@@ -72,6 +74,8 @@ class DocumentViewController: UIViewController {
 					self.textView.becomeFirstResponder()
 				}
 				
+				self.loadWorkingCopyStatus()
+				
 			} else {
 				
 				self.showAlert("Error", message: "Document could not be opened.", dismissCallback: {
@@ -82,6 +86,23 @@ class DocumentViewController: UIViewController {
 			
 		})
 		
+	}
+	
+	@objc private func update() {
+		guard unwrittenChanges else { return }
+		unwrittenChanges = false
+		
+		flushTextToDocument()
+		document?.autosave(completionHandler: { success in
+			self.loadWorkingCopyStatus()
+		})
+	}
+	
+	private var unwrittenChanges = false
+	private func scheduleUpdate() {
+		unwrittenChanges = true
+		NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(update), object: nil)
+		perform(#selector(update), with: nil, afterDelay: 1)
 	}
 	
 	private func updateTheme() {
@@ -104,6 +125,52 @@ class DocumentViewController: UIViewController {
 		
 		self.view.backgroundColor = textView.backgroundColor
 		
+	}
+	
+	private var urlService: WorkingCopyUrlService?
+	
+	@IBAction func workingCopyStatusTapped(_ sender: Any) {
+		guard let service = urlService else { return }
+		service.determineCommitLink({
+			(url, error) in
+			
+			if let error = error {
+				self.showErrorAlert(error)
+			}
+			
+			if let url = url {
+				UIApplication.shared.open(url)
+			}
+		})
+	}
+	
+	private func loadWorkingCopyStatus() {
+		guard let url = document?.fileURL else { return }
+		
+		// try to use existing service instance
+		if let service = urlService {
+			loadStatusWithService(service)
+			return
+		}
+		
+		// Try to get file provider service
+		WorkingCopyUrlService.getFor(url, completionHandler: { (service, error) in
+			// the service might very well be missing if you are picking from some other
+			// Location than Working Copy or the version of Working Copy isn't new enough
+			guard let service = service else { return }
+			self.urlService = service
+			
+			self.loadStatusWithService(service)
+		})
+	}
+	
+	private func loadStatusWithService(_ service: WorkingCopyUrlService) {
+		service.loadChangeText({ title in
+			
+			guard let button = self.workingCopyStatusButton else { return }
+			button.title = title
+			button.isEnabled = !title.isEmpty
+		})
 	}
 	
     override func viewWillAppear(_ animated: Bool) {
@@ -148,17 +215,21 @@ class DocumentViewController: UIViewController {
 
 		self.present(activityVC, animated: true, completion: nil)
 	}
-
-    @IBAction func dismissDocumentViewController() {
-
+	
+	private func flushTextToDocument() {
 		let currentText = self.document?.text ?? ""
-
+		
 		self.document?.text = self.textView.text
-
+		
 		if currentText != self.textView.text {
 			self.document?.updateChangeCount(.done)
 		}
+	}
 
+    @IBAction func dismissDocumentViewController() {
+
+		flushTextToDocument()
+		
         dismiss(animated: true) {
             self.document?.close(completionHandler: nil)
         }
@@ -178,6 +249,12 @@ extension DocumentViewController: UITextViewDelegate {
 			self.document?.updateChangeCount(.done)
 		}
 
+	}
+	
+	func textViewDidChange(_ textView: UITextView) {
+		if urlService != nil {
+			scheduleUpdate()
+		}
 	}
 	
 }
