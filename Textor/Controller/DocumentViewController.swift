@@ -29,6 +29,10 @@ class DocumentViewController: UIViewController {
 		
 		self.navigationController?.view.tintColor = .appTintColor
 		self.view.tintColor = .appTintColor
+
+		let notifications = NotificationCenter.default
+		notifications.addObserver(self, selector: #selector(appMovedToForeground),
+								  name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
 		
 		updateTheme()
 
@@ -173,12 +177,11 @@ class DocumentViewController: UIViewController {
 		})
 	}
 	
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-
-    }
-
+	@objc func appMovedToForeground() {
+		// we are back after being in the background and listen again and refresh from file
+		loadWorkingCopyStatus()
+	}
+	
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
 
