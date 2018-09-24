@@ -57,7 +57,11 @@ extension WorkingCopyUrlService {
 			}
 			
 			guard let url = url else { return }
-			guard let escaped = url.absoluteString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else { return }
+			
+			// we escape everything outside urlQueryAllowed but also & that starts next url parameter
+			let allowChars = CharacterSet.urlQueryAllowed.intersection(CharacterSet(charactersIn: "&").inverted)
+			
+			guard let escaped = url.absoluteString.addingPercentEncoding(withAllowedCharacters: allowChars) else { return }
 			callbackUrl = URL(string: "working-copy://x-callback-url/commit?url=\(escaped)&x-cancel=textor://&x-success=textor://")
 		})
 	}
